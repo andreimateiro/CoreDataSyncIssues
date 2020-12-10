@@ -13,10 +13,8 @@
 		7579619C25820B930043FA10 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7579619B25820B930043FA10 /* CloudKit.framework */; };
 		757961B725820E5F0043FA10 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 757961B525820E5F0043FA10 /* Model.xcdatamodeld */; };
 		757961B825820E5F0043FA10 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 757961B525820E5F0043FA10 /* Model.xcdatamodeld */; };
-		ABC350D4526686750F7EF68D /* CoreDataUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC35377D50DCC2872462943 /* CoreDataUtil.swift */; };
 		ABC351075F7A4B431A675418 /* MacOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC356E9B95527DD36253A3A /* MacOSApp.swift */; };
 		ABC354003F2B12AE5346A673 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC35A1C81DFA6A269DFDA12 /* ImportService.swift */; };
-		ABC354051047F6ED30D1CC50 /* CoreDataUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC35377D50DCC2872462943 /* CoreDataUtil.swift */; };
 		ABC354A7ABAB5F292A29E842 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC35D8DC4598044A801691E /* Session.swift */; };
 		ABC3551036F1D5274FF7309D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC35593E3A61D420F035D26 /* ContentView.swift */; };
 		ABC355391F71319A29017290 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC35A1C81DFA6A269DFDA12 /* ImportService.swift */; };
@@ -44,7 +42,6 @@
 		7579619B25820B930043FA10 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		757961B625820E5F0043FA10 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		ABC3511ABF6B1DB6AA15BC2D /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		ABC35377D50DCC2872462943 /* CoreDataUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataUtil.swift; sourceTree = "<group>"; };
 		ABC35593E3A61D420F035D26 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		ABC356BDD19FC7F57B0DCBDD /* B.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = B.swift; sourceTree = "<group>"; };
 		ABC356E9B95527DD36253A3A /* MacOSApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacOSApp.swift; sourceTree = "<group>"; };
@@ -97,7 +94,6 @@
 				ABC35A1C81DFA6A269DFDA12 /* ImportService.swift */,
 				ABC35A22B0B49790A9F8A4FA /* Model */,
 				757961B525820E5F0043FA10 /* Model.xcdatamodeld */,
-				ABC35377D50DCC2872462943 /* CoreDataUtil.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -263,7 +259,6 @@
 				ABC35B43D0D9977586BB8F68 /* A.swift in Sources */,
 				ABC35659DBFE6CB8CCFBC939 /* B.swift in Sources */,
 				757961B725820E5F0043FA10 /* Model.xcdatamodeld in Sources */,
-				ABC350D4526686750F7EF68D /* CoreDataUtil.swift in Sources */,
 				ABC35C787DC4F91275083B22 /* iOSApp.swift in Sources */,
 				ABC3551036F1D5274FF7309D /* ContentView.swift in Sources */,
 			);
@@ -281,7 +276,6 @@
 				ABC355391F71319A29017290 /* ImportService.swift in Sources */,
 				ABC35AD5B0FFAD02B4E500FB /* A.swift in Sources */,
 				ABC355FFFB1372FD293609B1 /* B.swift in Sources */,
-				ABC354051047F6ED30D1CC50 /* CoreDataUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

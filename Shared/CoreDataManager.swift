@@ -3,34 +3,29 @@ import CoreData
 
 class CoreDataManager {
 
-    let ckContainerName = "Model"
-    let ckContainerIdentifier = "iCloud.CoreDataSyncIssues"
-    let privateCloudStoreName = "Cloud"
-    let publicCloudStoreName = "CloudPublic"
     let usePrivateStore: Bool
 
     lazy var persistentContainer: NSPersistentContainer! = {
 
-        // 1. Create a container that can load CloudKit-backed stores
-        let container = NSPersistentCloudKitContainer(name: ckContainerName)
+        let container = NSPersistentCloudKitContainer(name: "Model")
         let defaultDescription = container.persistentStoreDescriptions.first
         let url = defaultDescription?.url?.deletingLastPathComponent()
 
-        // 3. Create a store description for a private CloudKit-backed local store
+        // Create a store description for a private CloudKit-backed local store
         let cloudStoreLocation = url!.appendingPathComponent("cloud.sqlite")
         let cloudStoreDescription = NSPersistentStoreDescription(url: cloudStoreLocation)
-        cloudStoreDescription.configuration = privateCloudStoreName
-        var privateCloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: ckContainerIdentifier)
+        cloudStoreDescription.configuration = "Cloud"
+        var privateCloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "iCloud.CoreDataSyncIssues")
         privateCloudKitContainerOptions.databaseScope = .private
         cloudStoreDescription.cloudKitContainerOptions = privateCloudKitContainerOptions
         cloudStoreDescription.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
         cloudStoreDescription.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
 
-        // 4. Create a store description for a public CloudKit-backed local store
+        // Create a store description for a public CloudKit-backed local store
         let publicCloudStoreLocation = url!.appendingPathComponent("cloud-public.sqlite")
         let publicCloudStoreDescription = NSPersistentStoreDescription(url: publicCloudStoreLocation)
-        publicCloudStoreDescription.configuration = publicCloudStoreName
-        var publicCloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: ckContainerIdentifier)
+        publicCloudStoreDescription.configuration = "CloudPublic"
+        var publicCloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "iCloud.CoreDataSyncIssues")
         publicCloudKitContainerOptions.databaseScope = .public
         publicCloudStoreDescription.cloudKitContainerOptions = publicCloudKitContainerOptions
         publicCloudStoreDescription.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
@@ -63,20 +58,6 @@ class CoreDataManager {
 //        }
 
         return container
-    }()
-
-    lazy var backgroundContext: NSManagedObjectContext = {
-        let context = self.persistentContainer.newBackgroundContext()
-        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-
-        return context
-    }()
-
-    lazy var mainContext: NSManagedObjectContext = {
-        let context = self.persistentContainer.viewContext
-        context.automaticallyMergesChangesFromParent = true
-
-        return context
     }()
 
     static let shared = CoreDataManager()

@@ -8,7 +8,7 @@ struct iOSApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, coreDataManager.mainContext)
+                .environment(\.managedObjectContext, coreDataManager.persistentContainer.viewContext)
                 .environmentObject(Session())
         }
     }

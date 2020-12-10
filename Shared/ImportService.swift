@@ -3,13 +3,26 @@ import CoreData
 
 class ImportService {
 
-    let backgroundContext: NSManagedObjectContext = CoreDataManager.shared.backgroundContext
+    var backgroundContext: NSManagedObjectContext = {
+        let context = CoreDataManager.shared.persistentContainer.newBackgroundContext()
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+
+        return context
+    }()
+
+    class func addRecord<T: NSManagedObject>(_ type : T.Type, withContent context: NSManagedObjectContext) -> T {
+        let entityName = T.description()
+        let entity = NSEntityDescription.entity(forEntityName: entityName, in: context)
+        let record = T(entity: entity!, insertInto: context)
+
+        return record
+    }
 
     func add(a: A) {
         backgroundContext.performAndWait {
             do {
                 let foundA = get(a: a)
-                let AToProcess = foundA != nil ? foundA! : CoreDataUtil.addRecord(AEntity.self, withContent: backgroundContext)
+                let AToProcess = foundA != nil ? foundA! : Self.addRecord(AEntity.self, withContent: backgroundContext)
 
                 if let foundA = foundA {
                     print("Updating a: \(foundA.name ?? "")")
@@ -25,16 +38,16 @@ class ImportService {
                 AToProcess.revision = a.revision as NSNumber?
 
                 // Update B entities
-                var updatedB = a.b
+                var updatedBs = a.b
                 var identicalRI = 0
                 var addedRI = 0
                 var retiredRI = 0
                 if let bEntities = AToProcess.b {
                     for case let bEntity as BEntity in bEntities {
                         let mappedEntity = mapB(fromBEntity: bEntity)
-                        if updatedB.contains(mappedEntity), let index = updatedB.firstIndex(of: mappedEntity) {
+                        if updatedBs.contains(mappedEntity), let index = updatedBs.firstIndex(of: mappedEntity) {
                             // delete valid entity from DTO so we don't add it again.
-                            updatedB.remove(at: index)
+                            updatedBs.remove(at: index)
                             identicalRI += 1
                         } else {
                             if bEntity.retired {
@@ -50,8 +63,8 @@ class ImportService {
 
                 // add new Bs (if any)
                 let bEntitySet = AToProcess.b?.mutableCopy() as? NSMutableSet
-                for b in updatedB {
-                    let bEntity = CoreDataUtil.addRecord(BEntity.self, withContent: self.backgroundContext)
+                for b in updatedBs {
+                    let bEntity = Self.addRecord(BEntity.self, withContent: backgroundContext)
 
                     bEntity.name = b.name
                     bEntity.a = AToProcess
@@ -73,29 +86,16 @@ class ImportService {
 
     func get(a: A) -> AEntity? {
 
-        var results: [AEntity]?
-        if let id = a.id, let objectID = try? CoreDataUtil.getManagedObjectID(byStringId: id, withContext: self.backgroundContext) {
-            let fetchRequest = CoreDataUtil.fetchRequest(AEntity.self, search: NSPredicate(format: "self == %@", objectID))
-            results = CoreDataUtil.query(AEntity.self, fetchRequest: fetchRequest, withContext: self.backgroundContext)
-        }  else if !a.name.isEmpty {
-            let namePredicate = NSPredicate(format: "name ==[c] %@", a.name)
-            let fetchRequest = CoreDataUtil.fetchRequest(AEntity.self, search: namePredicate)
-            results = try? backgroundContext.fetch(fetchRequest)
-        }
+        if !a.name.isEmpty {
+            let request = NSFetchRequest<AEntity>(entityName: "AEntity")
+            request.predicate = NSPredicate(format: "name ==[c] %@", a.name)
 
-        if let results = results {
-            switch results.count {
-            case 0:
-                return nil
-            case 1:
-                return results.first
-            default:
-                print("WARNING: multiple records found for name: \(a.name). Returning first result.")
+            if let results = try? backgroundContext.fetch(request), results.count > 0 {
                 return results.first
             }
-        } else {
-            return nil
         }
+
+        return nil
     }
 
     func importAll(fromJson json: String = "a") throws {
@@ -112,7 +112,6 @@ class ImportService {
     }
 
     func mapA(fromAEntity entity: AEntity) -> A {
-
         var Bs: [B] = []
         if let BEntities = entity.b {
             for bEntity in BEntities {
