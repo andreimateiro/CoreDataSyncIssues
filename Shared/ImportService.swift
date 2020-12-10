@@ -3,40 +3,29 @@ import CoreData
 
 class ImportService {
 
-    let backgroundContext: NSManagedObjectContext
+    let backgroundContext: NSManagedObjectContext = CoreDataManager.shared.backgroundContext
 
-    init(backgroundContext: NSManagedObjectContext = CoreDataManager.shared.backgroundContext) {
-        self.backgroundContext = backgroundContext
-    }
-
-    func add(a: A) throws -> AEntity? {
-        var aEntity: AEntity? = nil
-        var thrownError: Error?
-
+    func add(a: A) {
         backgroundContext.performAndWait {
             do {
                 let foundA = get(a: a)
-                let AToProcess = foundA != nil ? foundA! : CoreDataUtil.addRecord(AEntity.self, withContent: self.backgroundContext)
-                print("--------------------------------------------")
+                let AToProcess = foundA != nil ? foundA! : CoreDataUtil.addRecord(AEntity.self, withContent: backgroundContext)
 
                 if let foundA = foundA {
                     print("Updating a: \(foundA.name ?? "")")
                     let foundRevision = foundA.revision as? Int
                     if foundRevision == a.revision {
                         print("Trying to update a a with the same revision (\(a.revision)). Skipping.")
-                        print("--------------------------------------------")
                         return
                     }
-                } else {
-                    print("Creating a: \(a.name)")
                 }
 
                 AToProcess.name = a.name.trimmingCharacters(in: .whitespacesAndNewlines)
                 AToProcess.retired = a.retired
                 AToProcess.revision = a.revision as NSNumber?
 
+                // Update B entities
                 var updatedB = a.b
-
                 var identicalRI = 0
                 var addedRI = 0
                 var retiredRI = 0
@@ -59,7 +48,7 @@ class ImportService {
                 }
                 try backgroundContext.save()
 
-                // 3. add new Bs (if any)
+                // add new Bs (if any)
                 let bEntitySet = AToProcess.b?.mutableCopy() as? NSMutableSet
                 for b in updatedB {
                     let bEntity = CoreDataUtil.addRecord(BEntity.self, withContent: self.backgroundContext)
@@ -75,21 +64,11 @@ class ImportService {
                 AToProcess.b = bEntitySet
                 print("Updated Bs: [added: \(addedRI), retired: \(retiredRI), identical: \(identicalRI)]")
 
-                aEntity = AToProcess
-                print("--------------------------------------------")
-
                 try backgroundContext.save()
-
             } catch let error as NSError {
-                thrownError = error
+                print(error.localizedDescription)
             }
         }
-
-        if let error = thrownError {
-            throw error
-        }
-
-        return aEntity
     }
 
     func get(a: A) -> AEntity? {
@@ -99,7 +78,9 @@ class ImportService {
             let fetchRequest = CoreDataUtil.fetchRequest(AEntity.self, search: NSPredicate(format: "self == %@", objectID))
             results = CoreDataUtil.query(AEntity.self, fetchRequest: fetchRequest, withContext: self.backgroundContext)
         }  else if !a.name.isEmpty {
-            results = CoreDataUtil.query(AEntity.self, fetchRequest: Self.fetchRequestEquals(name: a.name), withContext: self.backgroundContext)
+            let namePredicate = NSPredicate(format: "name ==[c] %@", a.name)
+            let fetchRequest = CoreDataUtil.fetchRequest(AEntity.self, search: namePredicate)
+            results = try? backgroundContext.fetch(fetchRequest)
         }
 
         if let results = results {
@@ -117,38 +98,18 @@ class ImportService {
         }
     }
 
-    enum CoreDataUtilError: Error {
-        case NSManagedObjectIDNotFoundForString
-        case NSManagedObjectNotFound
-    }
-
-
-    // MARK: - Fetch Requests
-    class func fetchRequestEquals(name: String) -> NSFetchRequest<AEntity> {
-        let namePredicate = NSPredicate(format: "name ==[c] %@", name)
-        return CoreDataUtil.fetchRequest(AEntity.self, search: namePredicate)
-    }
-
-    // MARK: - JSON Encode/Decode
-    func decodeAs(fromURL url: URL) -> [A]? {
-        guard let data = try? Data(contentsOf: url, options: .mappedIfSafe) else { return nil }
-
-        return try? JSONDecoder().decode([A].self, from: data)
-    }
-
     func importAll(fromJson json: String = "a") throws {
         guard let path = Bundle.main.path(forResource: json, ofType: "json"),
-              let a = decodeAs(fromURL: URL(fileURLWithPath: path)) else {
+              let data = try? Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe),
+              let decoded = try? JSONDecoder().decode([A].self, from: data) else {
 
             return
         }
 
-        try a.forEach { a in
-            let _  = try add(a: a)
+        decoded.forEach { a in
+            add(a: a)
         }
     }
-
-    // MARK: - Entity to DTO map
 
     func mapA(fromAEntity entity: AEntity) -> A {
 
@@ -169,6 +130,10 @@ class ImportService {
     }
 
     func mapB(fromBEntity entity: BEntity) -> B {
-        B(id: entity.objectID.uriRepresentation().absoluteString, name: entity.name ?? "", retired: entity.retired)
+        B(
+            id: entity.objectID.uriRepresentation().absoluteString,
+            name: entity.name ?? "",
+            retired: entity.retired
+        )
     }
 }

@@ -8,8 +8,8 @@ struct iOSApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                    .environment(\.managedObjectContext, coreDataManager.mainContext)
-                    .environmentObject(Session())
+                .environment(\.managedObjectContext, coreDataManager.mainContext)
+                .environmentObject(Session())
         }
     }
 }
@@ -18,7 +18,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         #if targetEnvironment(simulator)
         if let appSupportPath = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?.path {
-            print("cloud sqlite file: \(appSupportPath)/cloud.sqlite")
+            print("cloud sqlite file: \(appSupportPath)/cloud-public.sqlite")
         }
         #endif
 
