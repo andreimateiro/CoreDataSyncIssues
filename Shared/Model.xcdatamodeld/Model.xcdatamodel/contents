@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="20B29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AEntity" representedClassName="AEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <attribute name="retired" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="revision" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <relationship name="b" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BEntity" inverseName="a" inverseEntity="BEntity"/>
+    </entity>
+    <entity name="BEntity" representedClassName="BEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <attribute name="retired" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <relationship name="a" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AEntity" inverseName="b" inverseEntity="AEntity"/>
+    </entity>
+    <configuration name="Cloud" usedWithCloudKit="YES">
+        <memberEntity name="AEntity"/>
+        <memberEntity name="BEntity"/>
+    </configuration>
+    <configuration name="CloudPublic" usedWithCloudKit="YES">
+        <memberEntity name="AEntity"/>
+        <memberEntity name="BEntity"/>
+    </configuration>
+    <configuration name="Local"/>
+    <elements>
+        <element name="AEntity" positionX="-63" positionY="-18" width="128" height="89"/>
+        <element name="BEntity" positionX="-54" positionY="-9" width="128" height="74"/>
+    </elements>
+</model>

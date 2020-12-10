@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="41edf1e3-8d5e-48f1-878c-caad306f5435" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="iphonesimulator_7F2E9E06-2AC6-40AB-A902-D6785D488C23" />
+  <component name="ProjectId" id="1lSOATCr6TNqEXvvHjEMVpHZ2Jy" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="OBJC.PRESERVED_TARGET_SELECTION" value="CoreDataSyncIssues (macOS)" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/CoreDataSyncIssues.xcodeproj" />
+  </component>
+  <component name="RunManager" selected="Application.CoreDataSyncIssues (iOS)">
+    <configuration name="CoreDataSyncIssues (iOS)" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-com.apple.CoreData.SQLDebug 0 -com.apple.CoreData.Logging.stderr 0 -com.apple.CoreData.MigrationDebug 0 -com.apple.CoreData.CloudKitDebug 1" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CoreDataSyncIssues" TARGET_NAME="CoreDataSyncIssues (iOS)" CONFIG_NAME="Debug" SCHEME_NAME="CoreDataSyncIssues (iOS)" IS_LOCATION_SIMULATION_ALLOWED="true" LOCATION_SCENARIO_ID="com.apple.dt.IDEFoundation.CurrentLocationScenarioIdentifier" LOCATION_SCENARIO_TYPE="1" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" RUN_TARGET_PROJECT_NAME="CoreDataSyncIssues" RUN_TARGET_NAME="CoreDataSyncIssues (iOS)" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+      <embedded_app_extension_list />
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CoreDataSyncIssues (macos)" type="AppleRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-com.apple.CoreData.SQLDebug 0 -com.apple.CoreData.Logging.stderr 0 -com.apple.CoreData.MigrationDebug 0 -com.apple.CoreData.CloudKitDebug 1" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CoreDataSyncIssues" TARGET_NAME="CoreDataSyncIssues (macOS)" CONFIG_NAME="Debug" SCHEME_NAME="CoreDataSyncIssues (macos)" IS_LOCATION_SIMULATION_ALLOWED="true" LOCATION_SCENARIO_ID="com.apple.dt.IDEFoundation.CurrentLocationScenarioIdentifier" LOCATION_SCENARIO_TYPE="1" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" RUN_TARGET_PROJECT_NAME="CoreDataSyncIssues" RUN_TARGET_NAME="CoreDataSyncIssues (macOS)" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+      <embedded_app_extension_list />
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.CoreDataSyncIssues (iOS)" />
+      <item itemvalue="Application.CoreDataSyncIssues (macos)" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="41edf1e3-8d5e-48f1-878c-caad306f5435" name="Default Changelist" comment="" />
+      <created>1607586881989</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1607586881989</updated>
+      <workItem from="1607586883102" duration="3219000" />
+      <workItem from="1607590128071" duration="2947000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
